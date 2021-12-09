@@ -17,7 +17,7 @@ namespace BradyCodeTest
                 while (!File.Exists(ConfigHelper.GenerationReportInputFilePath))
                 {
                     Console.WriteLine(string.Format("File Not Available in the directory : {0}", ConfigHelper.GenerationReportInputFilePath));
-                    Console.WriteLine("Will check evey ten seconds");
+                    Console.WriteLine("Will check evey 15 seconds");
                     Thread.Sleep(15000);
                 }
 
