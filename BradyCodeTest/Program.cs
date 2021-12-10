@@ -1,6 +1,8 @@
-﻿using System;
+﻿using BradyCodeTest.Services;
+using System;
 using System.IO;
 using System.Threading;
+
 namespace BradyCodeTest
 {
     class Program
@@ -11,21 +13,36 @@ namespace BradyCodeTest
 
             try
             {
+
+               
                 
-                ConfigHelper.ParseConfigFile();            
-                //If not check evey 15 seconds
-                while (!File.Exists(ConfigHelper.GenerationReportInputFilePath))
+                ConfigHelper.GetConfigFile();
+
+                var files = Directory.GetFiles(ConfigHelper.GenerationReportInputFilePath);
+                
+               
+                if (files.Length > 0 )
+                {
+                    
+                    foreach (var file in files)
+                    {
+                        GenerationReportInputModel GenerationReport = XMLHelper.ParsingXML(file);
+                        var GenerationOutput = new OutputGenrationService(GenerationReport);
+
+                        XMLHelper.CreateXML(GenerationOutput.generationOutput(), Path.GetFileName(file));
+                    }
+
+                }
+
+                else
                 {
                     Console.WriteLine(string.Format("File Not Available in the directory : {0}", ConfigHelper.GenerationReportInputFilePath));
                     Console.WriteLine("Will check evey 15 seconds");
-                    Thread.Sleep(15000);
                 }
 
-                GenerationReportInputModel GenerationReport = XMLHelper.ParsingXML();
 
-                GenerationOutputModel GenerationOutput = new GenerationOutputModel(GenerationReport);
 
-                XMLHelper.CreateXML(GenerationOutput);
+
             }
             catch (Exception e)
             {

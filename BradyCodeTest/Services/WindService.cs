@@ -15,7 +15,7 @@
                 {
                     Total = Total + Day.Price * Day.Energy * ReferenceDataHelper.ValueFactorHigh;
                 }
-
+                //The below decimal can be rounded, For now i followed as per the requirement and given output file.  
                 return Total;
             }
             else
@@ -24,7 +24,7 @@
                 {
                     Total = Total + Day.Price * Day.Energy * ReferenceDataHelper.ValueFactorLow;
                 }
-
+                //The below decimal can be rounded, For now i followed as per the requirement and given output file.  
                 return Total;
             }
         }

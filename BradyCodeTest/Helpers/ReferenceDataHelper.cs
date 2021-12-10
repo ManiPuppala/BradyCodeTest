@@ -27,7 +27,7 @@
         }
 
 
-        private static decimal GetReferenceData(string parentnodeName, string childnodeName)
+        public static decimal GetReferenceData(string parentnodeName, string childnodeName)
         {
             decimal result = 0.0M;
             XmlDocument xmlDoc = new XmlDocument();

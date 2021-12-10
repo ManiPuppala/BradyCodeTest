@@ -14,7 +14,7 @@ namespace BradyCodeTest
             {
                 Total = Total + Day.Price * Day.Energy * ReferenceDataHelper.ValueFactorMedium;
             }
-
+            //The below decimal can be rounded, For now i followed as per the requirement and given output file.  
             return Total;
         }
 

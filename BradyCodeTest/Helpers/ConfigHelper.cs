@@ -9,11 +9,15 @@
 
         public static string ReferenceDataFilePath;
 
-        public static void ParseConfigFile()
+        public static string ProcessedFilesPath;
+
+        public static void GetConfigFile()
         {
             GenerationReportInputFilePath = ConfigurationManager.AppSettings["GenerationReportInputFilePath"];
             GenerationOutputFilePath = ConfigurationManager.AppSettings["GenerationOutputFilePath"];
             ReferenceDataFilePath = ConfigurationManager.AppSettings["ReferenceDataFilePath"];
+            ProcessedFilesPath = ConfigurationManager.AppSettings["ProcessedFilesPath"];            
+
         }
     }
 }

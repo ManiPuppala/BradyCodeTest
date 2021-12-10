@@ -20,12 +20,13 @@
                 Total = Total + Day.Price * Day.Energy * ReferenceDataHelper.ValueFactorMedium;
             }
 
+            //The below decimal can be rounded, For now i followed as per the requirement.  
             return Total;
         }
 
         public List<DailyEmissions> GetDailyEmissions()
         {
-            List<DailyEmissions> dailyEmissions = new List<DailyEmissions>();
+            var dailyEmissions = new List<DailyEmissions>();
 
             foreach (var Day in Days)
             {
