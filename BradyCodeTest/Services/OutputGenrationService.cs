@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BradyCodeTest.DTO;
+using BradyCodeTest.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +41,7 @@ namespace BradyCodeTest.Services
             return DailyEmissions;
         }
 
+      
         private List<CoalActualHeatRates> GetActualHeatRates()
         {
             var coalActualHeatRates = new List<CoalActualHeatRates>();

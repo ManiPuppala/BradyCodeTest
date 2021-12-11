@@ -1,6 +1,9 @@
 ﻿
 namespace BradyCodeTest
 {
+    using BradyCodeTest.Abstrations;
+    using BradyCodeTest.DTO;
+    using BradyCodeTest.Helpers;
     using System.Collections.Generic;
     using System.Xml.Serialization;
     public class GasService : GeneratorBase
@@ -8,6 +11,10 @@ namespace BradyCodeTest
         [XmlElement("EmissionsRating")]
         public decimal EmissionsRating { get; set; }
 
+        /// <summary>
+        /// /// This method will perform the calculation for WindGenarator on daywise.
+        /// </summary>
+        /// <returns>returns the WindGenarator day wise Total in decimal.</returns>
         public override decimal GetTotals()
         {
             foreach (var Day in Days)
@@ -18,6 +25,10 @@ namespace BradyCodeTest
             return Total;
         }
 
+        /// <summary>
+        /// /// This method will perform the calculation for gas DailyEmissions. 
+        /// </summary>
+        /// <returns>returns the List of DailyEmissions.</returns>
         public List<DailyEmissions> GetDailyEmissions()
         {
             List<DailyEmissions> dailyEmissions = new List<DailyEmissions>();

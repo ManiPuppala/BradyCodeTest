@@ -1,14 +1,16 @@
 using System;
 using Xunit;
 using Moq;
+using BradyCodeTest.Helpers;
 
-namespace BradyCodeTest.UnitTest
+namespace BradyCodeTest.UnitTest.HelperTest
 {
-    public class ReferenceDataHelperTest
+    public class ReferenceDataHelperTest :IClassFixture<FixtureTest>
     {
-        public ReferenceDataHelperTest()
+        private readonly FixtureTest _fixtureTest;
+        public ReferenceDataHelperTest(FixtureTest fixtureTest)
         {
-            ConfigHelper.ReferenceDataFilePath = @"C:\ManiTestProjects\BradyCodeTest\Input\ReferenceData.xml";
+            _fixtureTest = fixtureTest;            
         }
      
         [Theory]

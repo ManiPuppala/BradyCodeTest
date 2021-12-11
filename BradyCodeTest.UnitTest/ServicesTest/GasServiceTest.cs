@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using FluentAssertions;
-namespace BradyCodeTest.UnitTest
+namespace BradyCodeTest.UnitTest.ServicesTest
 {
     public class GasServiceTest : IClassFixture<FixtureTest>
     {

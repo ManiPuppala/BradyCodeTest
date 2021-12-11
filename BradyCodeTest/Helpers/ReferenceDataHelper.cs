@@ -1,7 +1,10 @@
-﻿namespace BradyCodeTest
+﻿namespace BradyCodeTest.Helpers
 {
     using System;
     using System.Xml;
+
+
+    /* ReferenceDataHelper can be created as one time load where we can share the single object to the remining places*/
     public static class ReferenceDataHelper
     {
         public static readonly decimal ValueFactorLow;

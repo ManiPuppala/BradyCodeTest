@@ -1,4 +1,5 @@
-﻿using BradyCodeTest.Services;
+﻿using BradyCodeTest.Helpers;
+using BradyCodeTest.Services;
 using System;
 using System.IO;
 using System.Threading;
@@ -7,46 +8,50 @@ namespace BradyCodeTest
 {
     class Program
     {
-        static void Main(string[] args)
+
+        /* Brady File listner can be Created as job, where based on business times we can look weather folder has files or not and then process it
+        but for now I have used FileSystemWatcher where any files placed into the given directory the watcher picks that file and process it for every 2 seonds. */
+        static void Main()
         {
-            Console.WriteLine("Brady PLC Code Challenge Application Running..");
 
             try
             {
-
-               
-                
+                Console.WriteLine("Brady file proccessing systm started");
+                Console.WriteLine("------------------");
                 ConfigHelper.GetConfigFile();
-
                 var files = Directory.GetFiles(ConfigHelper.GenerationReportInputFilePath);
-                
-               
-                if (files.Length > 0 )
+                if (files.Length > 0)
                 {
-                    
-                    foreach (var file in files)
-                    {
-                        GenerationReportInputModel GenerationReport = XMLHelper.ParsingXML(file);
-                        var GenerationOutput = new OutputGenrationService(GenerationReport);
-
-                        XMLHelper.CreateXML(GenerationOutput.generationOutput(), Path.GetFileName(file));
-                    }
-
+                    ProcessFiles(files);
                 }
-
                 else
                 {
                     Console.WriteLine(string.Format("File Not Available in the directory : {0}", ConfigHelper.GenerationReportInputFilePath));
-                    Console.WriteLine("Will check evey 15 seconds");
                 }
 
+                Console.WriteLine(string.Format("Application Listinging for the files : {0}", ConfigHelper.GenerationReportInputFilePath));
+
+                using var watcher = new FileSystemWatcher(ConfigHelper.GenerationReportInputFilePath);
+                watcher.NotifyFilter = NotifyFilters.Attributes
+                                     | NotifyFilters.CreationTime
+                                     | NotifyFilters.DirectoryName
+                                     | NotifyFilters.FileName
+                                     | NotifyFilters.LastAccess
+                                     | NotifyFilters.LastWrite
+                                     | NotifyFilters.Security
+                                     | NotifyFilters.Size;
 
 
-
+                watcher.Created += OnCreated;
+                watcher.Filter = "*.xml";
+                watcher.EnableRaisingEvents = true;
+                Console.WriteLine("Press enter to exit.");
+                Console.ReadLine();
             }
-            catch (Exception e)
+
+            catch (Exception ex)
             {
-                Console.WriteLine(string.Format("Exception occured {0}", e.Message));
+                Console.WriteLine(string.Format("Exception occured {0}", ex.Message));
             }
             finally
             {
@@ -54,5 +59,65 @@ namespace BradyCodeTest
                 Console.ReadLine();
             }
         }
+
+        private static void OnChanged(object sender, FileSystemEventArgs e)
+        {
+            try
+            {
+                if (e.ChangeType != WatcherChangeTypes.Changed)
+                {
+                    return;
+                }
+                ProcessFile(e.FullPath);
+
+            }
+            catch
+            {
+                Console.WriteLine($"Changed: {e.FullPath}");
+            }
+        }
+
+        private static void OnCreated(object sender, FileSystemEventArgs e)
+        {
+            try
+            {
+                Thread.Sleep(3000);
+                ProcessFile(e.FullPath);
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Created: {e.FullPath}");
+            }
+                       
+        }
+
+
+        private static void ProcessFile(string filePath)
+        {
+            Console.WriteLine("---------------- ");
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            Console.WriteLine($"Started Processing File : {fileName}");
+            GenerationReportInputModel GenerationReport = XMLHelper.ParseXML(filePath);
+            var GenerationOutput = new OutputGenrationService(GenerationReport);
+            XMLHelper.CreateXML(GenerationOutput.generationOutput(), fileName);
+            Console.WriteLine("Completed File Process ");         
+            Console.WriteLine($"Moving a procssed file into Proccssed into { filePath} ");
+            XMLHelper.MoveFileAfterProcess(filePath, fileName);
+            Console.WriteLine($"Moved Proccesed file");
+            Console.WriteLine("---------------- ");
+        }
+
+
+        private static void ProcessFiles(string[] files)
+        {
+
+            foreach (var file in files)
+            {
+                ProcessFile(file);
+            }
+        }
     }
+
 }

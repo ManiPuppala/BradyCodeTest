@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using FluentAssertions;
+using BradyCodeTest.Services;
 
-namespace BradyCodeTest.UnitTest
+namespace BradyCodeTest.UnitTest.ServicesTest
 {
     public class CoalServiceTest : IClassFixture<FixtureTest>
     {

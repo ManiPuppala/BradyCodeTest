@@ -1,5 +1,8 @@
-﻿namespace BradyCodeTest
+﻿namespace BradyCodeTest.Services
 {
+    using BradyCodeTest.Abstrations;
+    using BradyCodeTest.DTO;
+    using BradyCodeTest.Helpers;
     using System.Collections.Generic;
     using System.Xml.Serialization;
     public class CoalService : GeneratorBase
@@ -13,6 +16,11 @@
         [XmlElement("EmissionsRating")]
         public decimal EmissionsRating { get; set; }
 
+
+        /// <summary>
+        /// /// This method will perform the calculation for Coal on daywise 
+        /// </summary>
+        /// <returns>returns the Coal day wise Total in decimal</returns>
         public override decimal GetTotals()
         {
             foreach (var Day in Days)
@@ -24,6 +32,10 @@
             return Total;
         }
 
+        /// <summary>
+        /// /// This method will perform the calculation for coal DailyEmissions  
+        /// </summary>
+        /// <returns>returns the List of DailyEmissions</returns>
         public List<DailyEmissions> GetDailyEmissions()
         {
             var dailyEmissions = new List<DailyEmissions>();
@@ -36,6 +48,10 @@
             return dailyEmissions;
         }
 
+        /// <summary>
+        ///  This method will perform the calculation for ActualHeatRate  
+        /// </summary>
+        /// <returns>returns the ActualHeatRate in decimal </returns>
         public decimal GetActualHeatRate()
         {
             return TotalHeatInput / ActualNetGeneration;

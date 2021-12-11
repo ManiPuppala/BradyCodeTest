@@ -1,5 +1,6 @@
-﻿namespace BradyCodeTest
+﻿namespace BradyCodeTest.Abstrations
 {
+    using BradyCodeTest.DTO;
     using System.Collections.Generic;
     using System.Xml.Serialization;
     public abstract class GeneratorBase

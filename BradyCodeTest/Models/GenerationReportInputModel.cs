@@ -1,5 +1,6 @@
 ﻿namespace BradyCodeTest
 {
+    using BradyCodeTest.Services;
     using System.Collections.Generic;
     using System.Xml.Serialization;
 

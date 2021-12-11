@@ -1,5 +1,6 @@
-﻿namespace BradyCodeTest
+﻿namespace BradyCodeTest.Models
 {
+    using BradyCodeTest.DTO;
     using System;
     using System.Collections.Generic;
     using System.Linq;

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using BradyCodeTest.Helpers;
+using BradyCodeTest.DTO;
+using BradyCodeTest.Models;
+using BradyCodeTest.Services;
+using System.Configuration;
 
 namespace BradyCodeTest.UnitTest
 {
@@ -9,15 +14,14 @@ namespace BradyCodeTest.UnitTest
     {
 
         public GenerationReportInputModel generationReport;
+        public GenerationOutputModel generationOutputModel;
 
         public FixtureTest()
         {
-            ConfigHelper.GenerationReportInputFilePath = @"C:\ManiTestProjects\BradyCodeTest\Input\GenerationReport.xml";
-            ConfigHelper.GenerationOutputFilePath = @"C:\ManiTestProjects\BradyCodeTest\Input\GenerationOutput.xml";
-            ConfigHelper.ReferenceDataFilePath = @"C:\ManiTestProjects\BradyCodeTest\Input\ReferenceData.xml";
-            generationReport = XMLHelper.ParsingXML(ConfigHelper.GenerationReportInputFilePath);
-
-
+            var InputFile = @"C:\ManiTestProjects\BradyCodeTest\BradyCodeTest.UnitTest\TestXmlFiles\01-Basic-Test.xml";
+            ConfigHelper.GenerationOutputFilePath = @"C:\ManiTestProjects\BradyCodeTest\BradyCodeTest.UnitTest\TestXmlFiles\TestOutPutGenaratedFiles\";
+            ConfigHelper.ReferenceDataFilePath = @"C:\ManiTestProjects\BradyCodeTest\BradyCodeTest.UnitTest\TestXmlFiles\ReferenceData.xml";       
+            generationReport = XMLHelper.ParseXML(InputFile);
         }
 
         public List<GenerationDay> GetColeDays()
@@ -53,6 +57,13 @@ namespace BradyCodeTest.UnitTest
             dailyEmissions.Add(new DailyEmissions { Name = "Gas[1]", Date = Convert.ToDateTime("2017-01-03T00:00:00+00:00"), Emission = 5.132380700M });
 
             return dailyEmissions;
+        }     
+
+        public GenerationOutputModel GetFileData()
+        {
+            // Here we can create fake data, for now I have used the service, But we cane create a fake data like GetExpectedGasDailyEmissions
+            var outPutService = new OutputGenrationService(generationReport);
+            return outPutService.generationOutput();
         }
     }
 }

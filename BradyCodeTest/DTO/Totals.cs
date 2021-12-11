@@ -1,4 +1,4 @@
-﻿namespace BradyCodeTest
+﻿namespace BradyCodeTest.DTO
 {
     using System.Xml.Serialization;
     public class Totals

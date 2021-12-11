@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace BradyCodeTest.UnitTest
+namespace BradyCodeTest.UnitTest.ServicesTest
 {
     public class WindServiceTest : IClassFixture<FixtureTest>
     {

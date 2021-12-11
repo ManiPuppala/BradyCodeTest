@@ -1,4 +1,4 @@
-﻿namespace BradyCodeTest
+﻿namespace BradyCodeTest.Helpers
 {
     using System.Configuration;
     public static class ConfigHelper

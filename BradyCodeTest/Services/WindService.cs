@@ -1,5 +1,7 @@
 ﻿namespace BradyCodeTest
 {
+    using BradyCodeTest.Abstrations;
+    using BradyCodeTest.Helpers;
     using System.Xml.Serialization;
 
     public class WindService : GeneratorBase
@@ -7,6 +9,10 @@
         [XmlElement("Location")]
         public string Location { get; set; }
 
+        /// <summary>
+        /// This method will perform the calculation for WindGenarator(Onshore/Offshore) on day wise.
+        /// </summary>
+        /// <returns>returns the WindGenarator day wise Total in decimal.</returns>
         public override decimal GetTotals()
         {
             if (Location == "Onshore")
